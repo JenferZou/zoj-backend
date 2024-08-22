@@ -7,6 +7,7 @@ import com.jenfer.zoj.model.entity.Question;
 import com.jenfer.zoj.model.entity.Question;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jenfer.zoj.model.vo.QuestionVO;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 * @description 针对表【question(题目)】的数据库操作Service
 * @createDate 2024-08-19 17:11:47
 */
+@Service
 public interface QuestionService extends IService<Question> {
 
     /**
