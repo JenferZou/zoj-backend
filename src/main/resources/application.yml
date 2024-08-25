@@ -90,4 +90,4 @@ cos:
     bucket: xxx
 # 沙箱配置
 codesandbox:
-  type: example
+  type: remote

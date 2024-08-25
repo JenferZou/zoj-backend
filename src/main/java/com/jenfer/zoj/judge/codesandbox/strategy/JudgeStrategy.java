@@ -1,6 +1,6 @@
 package com.jenfer.zoj.judge.codesandbox.strategy;
 
-import com.jenfer.zoj.model.dto.questionSubmit.JudgeInfo;
+import com.jenfer.zoj.judge.codesandbox.model.JudgeInfo;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -11,11 +11,16 @@ import com.jenfer.zoj.constant.UserConstant;
 import com.jenfer.zoj.exception.BusinessException;
 import com.jenfer.zoj.exception.ThrowUtils;
 import com.jenfer.zoj.model.dto.question.*;
+import com.jenfer.zoj.model.dto.questionSubmit.QuestionSubmitAddRequest;
+import com.jenfer.zoj.model.dto.questionSubmit.QuestionSubmitQueryRequest;
 import com.jenfer.zoj.model.dto.user.UserQueryRequest;
 import com.jenfer.zoj.model.entity.Question;
+import com.jenfer.zoj.model.entity.QuestionSubmit;
 import com.jenfer.zoj.model.entity.User;
+import com.jenfer.zoj.model.vo.QuestionSubmitVO;
 import com.jenfer.zoj.model.vo.QuestionVO;
 import com.jenfer.zoj.service.QuestionService;
+import com.jenfer.zoj.service.QuestionSubmitService;
 import com.jenfer.zoj.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -42,6 +47,11 @@ public class QuestionController {
     private UserService userService;
 
     private final static Gson GSON = new Gson();
+
+
+    @Resource
+    private QuestionSubmitService questionSubmitService;
+
 
     // region 增删改查
 
@@ -287,6 +297,49 @@ public class QuestionController {
         Page<Question> questionPage = questionService.page(new Page<>(current, size),
                 questionService.getQueryWrapper(questionQueryRequest));
         return ResultUtils.success(questionPage);
+    }
+
+
+
+
+
+
+
+
+    /**
+     * 提交题目
+     *
+     * @param questionSubmitAddRequest
+     * @param request
+     * @return resultNum 本次点赞变化数
+     */
+    @PostMapping("/question_submit/do")
+    public BaseResponse<Long> doSubmitQuesiton(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest,
+                                               HttpServletRequest request) {
+        if (questionSubmitAddRequest == null || questionSubmitAddRequest.getQuestionId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        final User loginUser = userService.getLoginUser(request);
+        Long questionSubmitId = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
+        return ResultUtils.success(questionSubmitId);
+    }
+
+
+    /**
+     * 分页获取已提交列表
+     *
+     * @param questionSubmitQueryRequest
+     * @param request
+     * @return resultNum 本次点赞变化数
+     */
+    @PostMapping("/question_submit/list/page")
+    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitByPage(@RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest,
+                                                                         HttpServletRequest request) {
+
+        long current = questionSubmitQueryRequest.getCurrent();
+        long pageSize = questionSubmitQueryRequest.getPageSize();
+        Page<QuestionSubmit> questionSubmitPage = questionSubmitService.page(new Page<>(current, pageSize), questionSubmitService.getQueryWrapper(questionSubmitQueryRequest));
+        return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage,userService.getLoginUser(request)));
     }
 
 }

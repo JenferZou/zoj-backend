@@ -3,7 +3,7 @@ package com.jenfer.zoj.judge.codesandbox.strategy;
 import cn.hutool.json.JSONUtil;
 import com.jenfer.zoj.model.dto.question.JudgeCase;
 import com.jenfer.zoj.model.dto.question.JudgeConfig;
-import com.jenfer.zoj.model.dto.questionSubmit.JudgeInfo;
+import com.jenfer.zoj.judge.codesandbox.model.JudgeInfo;
 import com.jenfer.zoj.model.entity.Question;
 import com.jenfer.zoj.model.enums.JudgeInfoMessageEnum;
 

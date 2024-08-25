@@ -26,51 +26,52 @@ import javax.servlet.http.HttpServletRequest;
  *
  
  */
-@RestController
-@RequestMapping("/question_submit")
+//@RestController
+//@RequestMapping("/question_submit")
 @Slf4j
+@Deprecated
 public class QuestionSubmitController {
 
-    @Resource
-    private QuestionSubmitService questionSubmitService;
-
-    @Resource
-    private UserService userService;
-
-    /**
-     * 提交题目
-     *
-     * @param questionSubmitAddRequest
-     * @param request
-     * @return resultNum 本次点赞变化数
-     */
-    @PostMapping("/")
-    public BaseResponse<Long> doSubmitQuesiton(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest,
-            HttpServletRequest request) {
-        if (questionSubmitAddRequest == null || questionSubmitAddRequest.getQuestionId() <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
-        final User loginUser = userService.getLoginUser(request);
-        Long questionSubmitId = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
-        return ResultUtils.success(questionSubmitId);
-    }
-
-
-    /**
-     * 分页获取已提交列表
-     *
-     * @param questionSubmitQueryRequest
-     * @param request
-     * @return resultNum 本次点赞变化数
-     */
-    @PostMapping("/list/page")
-    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitByPage(@RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest,
-                                                                         HttpServletRequest request) {
-
-        long current = questionSubmitQueryRequest.getCurrent();
-        long pageSize = questionSubmitQueryRequest.getPageSize();
-        Page<QuestionSubmit> questionSubmitPage = questionSubmitService.page(new Page<>(current, pageSize), questionSubmitService.getQueryWrapper(questionSubmitQueryRequest));
-        return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage,userService.getLoginUser(request)));
-    }
+//    @Resource
+//    private QuestionSubmitService questionSubmitService;
+//
+//    @Resource
+//    private UserService userService;
+//
+//    /**
+//     * 提交题目
+//     *
+//     * @param questionSubmitAddRequest
+//     * @param request
+//     * @return resultNum 本次点赞变化数
+//     */
+//    @PostMapping("/")
+//    public BaseResponse<Long> doSubmitQuesiton(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest,
+//            HttpServletRequest request) {
+//        if (questionSubmitAddRequest == null || questionSubmitAddRequest.getQuestionId() <= 0) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+//        }
+//        final User loginUser = userService.getLoginUser(request);
+//        Long questionSubmitId = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
+//        return ResultUtils.success(questionSubmitId);
+//    }
+//
+//
+//    /**
+//     * 分页获取已提交列表
+//     *
+//     * @param questionSubmitQueryRequest
+//     * @param request
+//     * @return resultNum 本次点赞变化数
+//     */
+//    @PostMapping("/list/page")
+//    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitByPage(@RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest,
+//                                                                         HttpServletRequest request) {
+//
+//        long current = questionSubmitQueryRequest.getCurrent();
+//        long pageSize = questionSubmitQueryRequest.getPageSize();
+//        Page<QuestionSubmit> questionSubmitPage = questionSubmitService.page(new Page<>(current, pageSize), questionSubmitService.getQueryWrapper(questionSubmitQueryRequest));
+//        return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage,userService.getLoginUser(request)));
+//    }
 
 }
